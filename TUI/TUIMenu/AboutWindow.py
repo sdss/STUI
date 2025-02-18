@@ -24,7 +24,6 @@
 """
 import os.path
 import sys
-from PIL import Image
 import matplotlib
 import numpy
 try:
@@ -66,7 +65,6 @@ def getInfoDict():
     res["numpy"] = numpy.__version__
     res["astropy"] = astropyVers
     # Image uses VERSION, but PILLOW supports __version__
-    res["pil"] = getattr(Image, "VERSION", getattr(Image, "__version__", "unknown"))
     res["pygame"] = pygameVersion
     res["specialFiles"] = getSpecialFileStr()
     return res
@@ -78,7 +76,7 @@ def getSpecialFileStr():
         if os.path.exists(filePath):
             return filePath
         return "%s (not found)" % (filePath,)
-        
+
     outStrList = []
     for name, func in (
         ("Preferences", TUI.TUIPaths.getPrefsFile),
@@ -99,7 +97,7 @@ def getSpecialFileStr():
     outStrList.append("Error Log: %s" % (sys.stderr.name,))
 
     return "\n".join(outStrList)
-    
+
 
 class AboutWdg(RO.Wdg.StrLabel):
     def __init__(self, master):
@@ -120,7 +118,6 @@ Tcl/Tk: %(tcltk)s
 matplotlib: %(matplotlib)s
 numpy: %(numpy)s
 %(astropy)s
-PIL: %(pil)s
 pygame: %(pygame)s
 
 With special thanks to:
