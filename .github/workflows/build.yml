@@ -5,6 +5,7 @@ name: Build
 jobs:
   build:
     strategy:
+      fail-fast: false
       matrix:
         os: [macos-10.15, macos-12, macos-11, macos-26]
 
@@ -16,6 +17,7 @@ jobs:
 
       # This doesn't seem to be needed
       - name: Install ActiveTcl
+        if: matrix.os != 'macos-26'
         run: |
           wget "http://faculty.washington.edu/gallegoj/ActiveTcl-8.5.18.0.298892-macosx10.5-i386-x86_64-threaded.dmg" -P /Users/runner
           hdiutil attach "/Users/runner/ActiveTcl-8.5.18.0.298892-macosx10.5-i386-x86_64-threaded.dmg"
