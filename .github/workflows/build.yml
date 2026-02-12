@@ -17,7 +17,7 @@ jobs:
 
       # This doesn't seem to be needed
       - name: Install ActiveTcl
-        if: matrix.os != 'macos-26'
+        # if: matrix.os != 'macos-26'
         run: |
           wget "https://www.dropbox.com/scl/fi/uw29r79w9aumcqjqyven8/ActiveTcl-8.6.8.0-macosx10.9-x86_64.pkg?rlkey=00wunsrerudp2r5tjfmbb9nzj&dl=0" -P /Users/runner
           sudo installer -pkg /Users/runner/ActiveTcl-8.6.8.0-macosx10.9-x86_64.pkg?rlkey=00wunsrerudp2r5tjfmbb9nzj&dl=0 -target /
