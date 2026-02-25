@@ -73,7 +73,7 @@ jobs:
           ACTORKEYS_DIR: ${{github.workspace}}/../actorkeys
 
       - name: 'Upload Artifact'
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: STUI_${{ matrix.os }}
           path: /Users/runner/STUI_*_Source/BuildForMac/dist/STUI_*_Mac.dmg
