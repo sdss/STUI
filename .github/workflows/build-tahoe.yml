@@ -6,7 +6,7 @@ jobs:
   build:
     strategy:
       matrix:
-        os: [macos-26, macos-26-large]
+        os: [macos-26]
 
     runs-on: ${{ matrix.os }}
 
