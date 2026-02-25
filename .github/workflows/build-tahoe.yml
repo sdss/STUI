@@ -14,35 +14,21 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Setup conda
-        uses: conda-incubator/setup-miniconda@v3
-        with:
-          auto-update-conda: false
-
       - name: Install dependencies
         run: |
           git clone --depth 1 --single-branch --branch python2 https://github.com/sdss/opscore.git ../opscore
           git clone --depth 1 --single-branch --branch sdss5 https://github.com/sdss/actorkeys.git ../actorkeys
           git clone --depth 1 --single-branch --branch master https://github.com/r-owen/RO.git ../RO
 
+      - name: Install Python 2
+        uses: LizardByte/actions/actions/setup_python@master
+        with:
+          python-version: '2.7'
+
       - name: Restore environment
         run: |
-          conda create --name STUI --file BuildForMac/environment-tahoe.txt
-          conda activate STUI
           pip install -U pip wheel setuptools
-          pip install numpy
-          pip install py2app==0.24 modulegraph==0.19.2 matplotlib==2.2.5 pyfits==3.5 twisted==20.3.0 pygame==1.9.6
-          pip install Pillow==6.2.2
-        shell: bash -l {0}
-
-      - name: List environment
-        run: |
-          conda activate STUI
-          echo "pip list"
-          pip list
-          echo "conda list"
-          conda list
-        shell: bash -l {0}
+          pip install -r BuildForMac/environment-tahoe.txt
 
       - name: Build STUI
         shell: bash -l {0}
