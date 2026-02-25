@@ -1,13 +1,12 @@
-on: [workflow_dispatch, pull_request, push]
+on: [workflow_dispatch, pull_request]
 
 name: Build
 
 jobs:
   build:
     strategy:
-      fail-fast: false
       matrix:
-        os: [macos-14-large, macos-26]
+        os: [macos-10.15, macos-12, macos-11]
 
     runs-on: ${{ matrix.os }}
 
@@ -17,14 +16,14 @@ jobs:
 
       # This doesn't seem to be needed
       - name: Install ActiveTcl
-        # if: matrix.os != 'macos-26'
         run: |
-          wget "https://www.dropbox.com/scl/fi/uw29r79w9aumcqjqyven8/ActiveTcl-8.6.8.0-macosx10.9-x86_64.pkg?rlkey=00wunsrerudp2r5tjfmbb9nzj&dl=0" -P /Users/runner
-          sudo installer -pkg "/Users/runner/ActiveTcl-8.6.8.0-macosx10.9-x86_64.pkg?rlkey=00wunsrerudp2r5tjfmbb9nzj&dl=0" -target /
+          wget "http://faculty.washington.edu/gallegoj/ActiveTcl-8.5.18.0.298892-macosx10.5-i386-x86_64-threaded.dmg" -P /Users/runner
+          hdiutil attach "/Users/runner/ActiveTcl-8.5.18.0.298892-macosx10.5-i386-x86_64-threaded.dmg"
+          sudo installer -pkg /Volumes/ActiveTcl-8.5/ActiveTcl-8.5.pkg -target /
           hash -r
 
       - name: Setup conda
-        uses: conda-incubator/setup-miniconda@v3
+        uses: conda-incubator/setup-miniconda@v2
         with:
           auto-update-conda: false
 
@@ -38,21 +37,19 @@ jobs:
         run: |
           conda create --name STUI --file BuildForMac/environment.txt
           conda activate STUI
-          pip install -U pip wheel setuptools
-          pip install typing-extensions
           pip install numpy==1.10.1
           pip install py2app==0.22 matplotlib==2.2.5 pyfits==3.5 twisted==20.3.0 pygame==1.9.6
           pip install modulegraph==0.19.2
         shell: bash -l {0}
 
-      # - name: Build Imaging
-      #   run: |
-      #     conda activate STUI
-      #     wget https://src.fedoraproject.org/repo/pkgs/python-imaging/Imaging-1.1.7.tar.gz/fc14a54e1ce02a0225be8854bfba478e/Imaging-1.1.7.tar.gz
-      #     tar xvf Imaging-1.1.7.tar.gz
-      #     python Imaging-1.1.7/setup.py install
-      #     rm -Rf Imaging*
-      #   shell: bash -l {0}
+      - name: Build Imaging
+        run: |
+          conda activate STUI
+          wget https://src.fedoraproject.org/repo/pkgs/python-imaging/Imaging-1.1.7.tar.gz/fc14a54e1ce02a0225be8854bfba478e/Imaging-1.1.7.tar.gz
+          tar xvf Imaging-1.1.7.tar.gz
+          python Imaging-1.1.7/setup.py install
+          rm -Rf Imaging*
+        shell: bash -l {0}
 
       - name: List environment
         run: |
@@ -76,7 +73,7 @@ jobs:
           ACTORKEYS_DIR: ${{github.workspace}}/../actorkeys
 
       - name: 'Upload Artifact'
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v2
         with:
           name: STUI_${{ matrix.os }}
           path: /Users/runner/STUI_*_Source/BuildForMac/dist/STUI_*_Mac.dmg
