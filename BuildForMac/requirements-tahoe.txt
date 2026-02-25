@@ -9,9 +9,9 @@ idna==2.10
 incremental==22.10.0
 kiwisolver==1.1.0
 macholib==1.16.3
-matplotlib==2.2.5
+matplotlib
 modulegraph==0.19.2
-numpy==1.16.6
+numpy
 Pillow==6.2.2
 py2app==0.24
 pyfits==3.5
