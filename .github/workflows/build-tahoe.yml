@@ -28,7 +28,7 @@ jobs:
       - name: Restore environment
         run: |
           pip install -U pip wheel setuptools
-          pip install -r BuildForMac/environment-tahoe.txt
+          pip install -r BuildForMac/requirements-tahoe.txt
 
       - name: Build STUI
         shell: bash -l {0}
