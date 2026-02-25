@@ -23,7 +23,7 @@ jobs:
           hash -r
 
       - name: Setup conda
-        uses: conda-incubator/setup-miniconda@v2
+        uses: conda-incubator/setup-miniconda@v3
         with:
           auto-update-conda: false
 
