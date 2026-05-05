@@ -12,7 +12,7 @@ macholib==1.16.3
 matplotlib
 modulegraph==0.19.2
 numpy
-Pillow==6.2.2
+Pillow==12.2.0
 py2app==0.24
 pyfits==3.5
 pygame==1.9.6
