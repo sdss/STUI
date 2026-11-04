@@ -128,15 +128,17 @@ class AlertInfo(object):
     
     def __eq__(self, rhs):
         """Two alertInfos are considered equal if all data except the timestamp match.
+
+        Actually John thinks forcing severity to match is causing a problem
         """
         if not isinstance(rhs, self.__class__):
             return False
         return self.alertID == rhs.alertID \
-            and self.severity == rhs.severity \
             and self.value == rhs.value \
             and self.isEnabled == rhs.isEnabled \
             and self.isAcknowledged == rhs.isAcknowledged \
             and self.ackCmdID == rhs.ackCmdID
+            # and self.severity == rhs.severity \
 
     def __str__(self):
         enabledStr = "Enabled" if self.isEnabled else "Disabled"
